@@ -3,7 +3,7 @@ import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Restaurant } from './entities/restaurant.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
 export class RestaurantService {
@@ -12,8 +12,10 @@ export class RestaurantService {
     private restaurantRepository: Repository<Restaurant>
   ){}
 
-  create(createRestaurantDto: CreateRestaurantDto) {
-    return 'This action adds a new restaurant';
+  async create(createRestaurantDto: CreateRestaurantDto): Promise<Restaurant> {
+    return this.restaurantRepository.save(
+      this.restaurantRepository.create(createRestaurantDto)
+    )
   }
 
   async findAll(): Promise<Restaurant[]> {
@@ -32,11 +34,23 @@ export class RestaurantService {
     throw new NotFoundException('Could not find the restaurant')
   }
 
-  update(id: number, updateRestaurantDto: UpdateRestaurantDto) {
-    return `This action updates a #${id} restaurant`;
+  async update(id: number, updateRestaurantDto: UpdateRestaurantDto): Promise<Restaurant> {
+    await this.restaurantRepository
+      .createQueryBuilder()
+      .update()
+      .set({ ...updateRestaurantDto })
+      .where('id =:id', { id })
+      .execute();
+    let updatedRestaurant = await this.findOne(id);
+    return updatedRestaurant
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} restaurant`;
+  async remove(id: number): Promise<DeleteResult> {
+    return await this.restaurantRepository
+    .createQueryBuilder()
+    .delete()
+    .from(Restaurant)
+    .where('id =:id', {id})
+    .execute()
   }
 }
