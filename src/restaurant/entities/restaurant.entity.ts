@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 // export class Restaurant {}
-export class OpeningHours {
+export class OpeningHour {
     day_interval: string
     opening_hour: string
     closing_hour: string
@@ -33,10 +33,10 @@ export class Restaurant {
     description?: string
 
     @Column('simple-json', {nullable: true, default: null})
-    opening_hours?: OpeningHours[]
+    opening_hours?: OpeningHour[]
 
     @Column('simple-json', {nullable: true, default: null})
-    location?: Location
+    location?: Location[]
 
     @CreateDateColumn()
     created_at: Date; // Creation date
