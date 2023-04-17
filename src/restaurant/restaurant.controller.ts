@@ -19,7 +19,7 @@ export class RestaurantController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     try {
       return await this.restaurantService.findOne(id);  
     } catch (error) {

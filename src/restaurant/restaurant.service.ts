@@ -16,11 +16,12 @@ export class RestaurantService {
     return 'This action adds a new restaurant';
   }
 
-  findAll() {
-    return `This action returns all restaurant`;
+  async findAll(): Promise<Restaurant[]> {
+    const restaurants = await this.restaurantRepository.find()
+    return restaurants
   }
 
-  async findOne(id: string): Promise<Restaurant> {
+  async findOne(id: number): Promise<Restaurant> {
     console.log("findOne", id)
     const restaurant = await this.restaurantRepository.findOne({
       where: {

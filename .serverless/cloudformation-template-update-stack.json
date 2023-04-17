@@ -176,7 +176,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/food-advisor/dev/1681634341051-2023-04-16T08:39:01.051Z/food-advisor.zip"
+          "S3Key": "serverless/food-advisor/dev/1681706601954-2023-04-17T04:43:21.954Z/food-advisor.zip"
         },
         "Handler": "src/lambda.handler",
         "Runtime": "nodejs16.x",
@@ -202,14 +202,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionFgF9GkNj6Cy7QdFDdQ9KoIwwxuDxaytptm9SxeVG1zI": {
+    "MainLambdaVersionGplAq7Y4sQyhmNxOwBHYjZmcyaPnGlEPw9QswdWEaZA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "0vTTD/qGoN8b88wD8Gicet42P65sgMMFR3GWsefkFqE="
+        "CodeSha256": "1wq7KxYzElWDoxotHb1MgZ168iA65iOsj30gRyy47ws="
       }
     },
     "ApiGatewayRestApi": {
@@ -285,7 +285,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1681634312090": {
+    "ApiGatewayDeployment1681706571991": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -347,7 +347,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionFgF9GkNj6Cy7QdFDdQ9KoIwwxuDxaytptm9SxeVG1zI"
+        "Ref": "MainLambdaVersionGplAq7Y4sQyhmNxOwBHYjZmcyaPnGlEPw9QswdWEaZA"
       },
       "Export": {
         "Name": "sls-food-advisor-dev-MainLambdaFunctionQualifiedArn"

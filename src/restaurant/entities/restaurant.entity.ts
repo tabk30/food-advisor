@@ -14,8 +14,8 @@ export class Location {
 
 @Entity('restaurant')
 export class Restaurant {
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column('varchar')
     name: string
@@ -35,7 +35,7 @@ export class Restaurant {
     @Column('simple-json', {nullable: true, default: null})
     opening_hours?: OpeningHours[]
 
-    @Column('simple-json', {nullable: null, default: null})
+    @Column('simple-json', {nullable: true, default: null})
     location?: Location
 
     @CreateDateColumn()

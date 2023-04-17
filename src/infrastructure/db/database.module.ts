@@ -14,7 +14,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
                 username: config.get('POSTGRES_USER') || 'postgres',
                 password: config.get('POSTGRES_PASSWORD') || 'admin123456',
                 database: config.get('POSTGRES_DB') || 'nestjs',
-                entities: [__dirname + '/../**/*.entity.{js,ts}'],
+                entities: [
+                    __dirname + '/../../**/**/*.entity.{js,ts}'
+                    // Restaurant
+                ],
                 synchronize: true,
             })
         })
