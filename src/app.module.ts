@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
-import { DatabaseModule } from './infrastructure';
+import { DatabaseModule, ProducerModule } from './infrastructure';
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { DatabaseModule } from './infrastructure';
       // }),
     }),
     DatabaseModule,
+    ProducerModule,
     RestaurantModule
   ],
   controllers: [AppController],
