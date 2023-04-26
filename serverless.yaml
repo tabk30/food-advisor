@@ -1,23 +1,9 @@
 service: food-advisor
 
-custom:
-  serverless-offline-sqs:
-    autoCreate: true                 
-    apiVersion: '2012-11-05'
-    endpoint: http://0.0.0.0:9324	# Endpoint where you will publish SQS message
-    region: ap-southeast-1  			# Your preferred AWS region
-    accessKeyId: root
-    secretAccessKey: root
-    skipCacheInvalidation: false
-  myFifoQueueARN: arn:aws:sqs:ap-southeast-1:377116985439:myFifoQueue.fifo
-  myFifoQueneURL: https://sqs.ap-southeast-1.amazonaws.com/377116985439/myFifoQueue.fifo
-
 plugins:
  - serverless-plugin-typescript
  - serverless-plugin-optimize
  - serverless-offline
-#  - serverless-vpc-plugin
- - serverless-offline-sqs
 
 provider:
  name: aws
@@ -29,9 +15,6 @@ provider:
   subnetIds:
     - subnet-04694cd6021643278
  environment:
-  ENV: local
-  FIFO_QUEUE_ARN: ${self:custom.myFifoQueueARN}
-  SQS_OFFLINE_ENDPOINT: ${self:custom.serverless-offline-sqs.endpoint}
 
 functions:
  main: # The name of the lambda function
@@ -41,15 +24,5 @@ functions:
      - http:
         method: any
         path: /{any+}
- consumer:
-   handler: src/consumer.handleConsume
-   events:
-     - sqs: ${self:custom.myFifoQueueARN}
 resources:
  Resources:
-  myFifoQueue:
-   Type: 'AWS::SQS::Queue'
-   Properties:
-     QueueName: myFifoQueue.fifo
-     ContentBasedDeduplication: false
-     FifoQueue: true

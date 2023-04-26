@@ -4,6 +4,7 @@
 .serverless/
 .build/
 my-dynamodb-data/
+cdk.out/
 # Logs
 logs
 *.log

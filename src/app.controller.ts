@@ -8,10 +8,9 @@ export class AppController {
 
   @Get()
   async getHello(event: any): Promise<ProxyResult> {
-    this.appService.sendMessage({body: "hello sqs"})
     return {
       statusCode: 200,
-      body: 'Published message to SQS queue',
+      body: 'Hello NestJS!',
     };
   }
 }
