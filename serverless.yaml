@@ -15,11 +15,18 @@ provider:
   subnetIds:
     - subnet-04694cd6021643278
  environment:
+  dbname: 'foodAdvisorDB'
+  dbtype: 'engine'
+  dbhost: 'localhost'
+  dbport: '5432'
+  dbusername: 'postgres'
+  dbpassword: 'changeme'
+  dbInstanceIdentifier: 'foodAdvisorDB'
 
 functions:
  main: # The name of the lambda function
    # The module 'handler' is exported in the file 'src/lambda'
-   handler: src/lambda.handler
+   handler: ./src/lambda.handler
    events:
      - http:
         method: any

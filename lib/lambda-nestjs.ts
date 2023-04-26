@@ -3,13 +3,18 @@ import { Construct } from "constructs";
 import * as cdk from 'aws-cdk-lib';
 import * as path from "path";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
+import { SubnetType, Vpc } from "aws-cdk-lib/aws-ec2";
 
 export class LambdaNestJS extends Construct {
     private readonly appName: string;
     private lambdaHandler: Function;
     private apiGateway: RestApi;
 
-    constructor(private readonly scope: cdk.Stack, id: string) {
+    constructor(
+        private readonly scope: cdk.Stack, 
+        private readonly id: string,
+        private readonly vpc: Vpc,
+    ) {
         super(scope, id);
         this.appName = scope.node.tryGetContext('appName') || "Food-Advisor";
 
@@ -23,10 +28,23 @@ export class LambdaNestJS extends Construct {
     private createLambdaHandler() {
         this.lambdaHandler = new Function(this, `${this.appName}-lamdda-handler`, {
             runtime: Runtime.NODEJS_16_X,
-            code: Code.fromAsset(path.join(__dirname, '../src')),
+            code: Code.fromAsset(path.join(__dirname, '../api/src')),
             handler: 'lambda.handler',
+            // 👇 place lambda in the VPC
+            vpc: this.vpc,
+            // 👇 place lambda in Private Subnets
+            vpcSubnets: {
+                subnetType: SubnetType.PRIVATE_WITH_EGRESS
+            },
             environment: {
                 // any config eviroment
+                dbname: 'foodAdvisorDB',
+                dbtype: 'engine',
+                dbhost: 'cdkappstack-postgresdbfoodadvisorrdsdb1b63d95f-r0js785fdji4.cadptjxhazkw.ap-southeast-1.rds.amazonaws.com',
+                dbport: '5432',
+                dbusername: 'postgres',
+                dbpassword: 'rrJkFXJaN6Vu,1zi0.bOTEoruz^bTt',
+                dbInstanceIdentifier: 'cdkappstack-postgresdbfoodadvisorrdsdb1b63d95f-r0js785fdji4'
             }
         });
     }
