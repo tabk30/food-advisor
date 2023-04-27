@@ -28,7 +28,7 @@ export class LambdaNestJS extends Construct {
     private createLambdaHandler() {
         this.lambdaHandler = new Function(this, `${this.appName}-lamdda-handler`, {
             runtime: Runtime.NODEJS_16_X,
-            code: Code.fromAsset(path.join(__dirname, '../api/src')),
+            code: Code.fromAsset(path.join(__dirname, '../src')),
             handler: 'lambda.handler',
             // 👇 place lambda in the VPC
             vpc: this.vpc,
